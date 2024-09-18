@@ -10,8 +10,8 @@ const Quiz = () => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedOption, setSelectedOption] = useState("");
   const [score, setScore] = useState(0);
-  const [answerStatus, setAnswerStatus] = useState(""); // Added for tracking answer status
-  const [statusClass, setStatusClass] = useState(""); // Added for tracking answer status class
+  const [answerStatus, setAnswerStatus] = useState("");
+  const [statusClass, setStatusClass] = useState("");
 
   const handleNext = () => {
     if (selectedOption === frontendQuestions[currentQuestionIndex].answer) {
@@ -27,12 +27,18 @@ const Quiz = () => {
   };
 
   const handleFinish = () => {
-    // Check the last question
     if (selectedOption === frontendQuestions[currentQuestionIndex].answer) {
       setScore(score + 1);
     }
-    // Pass score to results page
-    navigate("/results", { state: { score } });
+    navigate("/results", {
+      state: {
+        score:
+          score +
+          (selectedOption === frontendQuestions[currentQuestionIndex].answer
+            ? 1
+            : 0),
+      },
+    });
   };
 
   const isQuizComplete = currentQuestionIndex >= frontendQuestions.length;
